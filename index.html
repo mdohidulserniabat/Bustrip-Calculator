@@ -16,6 +16,10 @@
     --success: #388e3c;
     --danger: #d32f2f;
     --purple: #7b1fa2;
+    --excel-green: #217346;
+    --excel-light: #e8f5e9;
+    --pdf-red: #d32f2f;
+    --pdf-light: #ffebee;
     --light-bg: #eef2f5;
     --card-bg: #ffffff;
     --text: #222222;
@@ -23,6 +27,11 @@
     --border: #e0e0e0;
     --shadow: 0 10px 30px rgba(0,0,0,0.08);
     --shadow-hover: 0 15px 35px rgba(0,0,0,0.12);
+    --gradient-blue: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+    --gradient-orange: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    --gradient-excel: linear-gradient(135deg, #217346 0%, #1a5d38 100%);
+    --gradient-pdf: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
   }
 
   * {
@@ -44,7 +53,7 @@
   }
 
   .header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: var(--gradient-blue);
     color: white;
     padding: 25px 30px;
     border-radius: 20px;
@@ -52,6 +61,7 @@
     box-shadow: var(--shadow);
     position: relative;
     overflow: hidden;
+    text-align: center;
   }
 
   .header::before {
@@ -66,23 +76,42 @@
     transform: translate(30%, -30%);
   }
 
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    transform: translate(-30%, 30%);
+  }
+
   .header h1 {
     margin: 0;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
+    position: relative;
+    z-index: 1;
   }
 
   .header h1 i {
-    font-size: 32px;
+    font-size: 36px;
+    color: #FFD700;
   }
 
   .header .subtitle {
-    margin-top: 8px;
+    margin-top: 10px;
     opacity: 0.9;
-    font-size: 16px;
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
   }
 
   .card {
@@ -114,10 +143,12 @@
     overflow: hidden;
     color: white;
     transition: all 0.3s ease;
+    border: 2px solid rgba(255,255,255,0.2);
   }
 
   .stat-card:hover {
     transform: scale(1.03);
+    border-color: rgba(255,255,255,0.4);
   }
 
   .stat-card::before {
@@ -131,19 +162,19 @@
   }
 
   .stat-card.jor {
-    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+    background: var(--gradient-blue);
   }
 
   .stat-card.bijor {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    background: var(--gradient-orange);
   }
 
   .stat-card.today {
-    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
   }
 
   .stat-card.all {
-    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    background: var(--gradient-pdf);
   }
 
   .stat-card .label {
@@ -156,34 +187,39 @@
   }
 
   .stat-card .value {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 800;
     margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
   .stat-card .icon {
     position: absolute;
     bottom: 15px;
     right: 20px;
-    font-size: 45px;
-    opacity: 0.2;
+    font-size: 50px;
+    opacity: 0.3;
   }
 
   .date-selector {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
     flex-wrap: wrap;
     padding: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: white;
     border-radius: 16px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   }
 
   .date-selector label {
     font-weight: 600;
     color: var(--text);
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .date-selector input[type="date"] {
@@ -195,24 +231,25 @@
     background: white;
     color: var(--text);
     transition: all 0.3s ease;
+    min-width: 200px;
   }
 
   .date-selector input[type="date"]:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
   }
 
   .date-display {
-    margin-left: auto;
     font-size: 16px;
     font-weight: 600;
     color: var(--primary);
-    padding: 10px 20px;
+    padding: 12px 24px;
     background: rgba(25, 118, 210, 0.1);
     border-radius: 12px;
-    min-width: 300px;
+    border: 2px solid rgba(25, 118, 210, 0.2);
     text-align: center;
+    min-width: 300px;
   }
 
   .trip-lists {
@@ -233,13 +270,14 @@
     border-radius: 16px;
     padding: 0;
     overflow: hidden;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   }
 
   .list-header {
     padding: 20px;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -286,7 +324,7 @@
     padding: 15px;
     margin-bottom: 12px;
     background: white;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -305,7 +343,7 @@
     font-weight: 700;
     font-size: 16px;
     color: var(--primary);
-    padding: 5px 12px;
+    padding: 8px 15px;
     background: rgba(25, 118, 210, 0.08);
     border-radius: 8px;
     border: 1px solid rgba(25, 118, 210, 0.2);
@@ -315,6 +353,7 @@
     color: var(--text-light);
     font-weight: 600;
     min-width: 40px;
+    font-size: 16px;
   }
 
   .empty-state {
@@ -335,24 +374,41 @@
   }
 
   button {
-    padding: 12px 24px;
+    padding: 14px 28px;
     border-radius: 12px;
     border: none;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 44px;
+    gap: 10px;
+    min-height: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  button:hover::before {
+    left: 100%;
   }
 
   button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   }
 
   button:active {
@@ -360,7 +416,7 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background: var(--gradient-blue);
     color: white;
   }
 
@@ -370,17 +426,17 @@
   }
 
   .btn-success {
-    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
     color: white;
   }
 
   .btn-danger {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    background: var(--gradient-pdf);
     color: white;
   }
 
   .btn-warning {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    background: var(--gradient-orange);
     color: white;
   }
 
@@ -390,19 +446,21 @@
   }
 
   .btn-excel {
-    background: linear-gradient(135deg, #217346 0%, #1a5d38 100%);
+    background: var(--gradient-excel);
     color: white;
+    border: 2px solid rgba(33, 115, 70, 0.3);
   }
 
   .btn-pdf {
-    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+    background: var(--gradient-pdf);
     color: white;
+    border: 2px solid rgba(211, 47, 47, 0.3);
   }
 
   .btn-small {
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 14px;
-    min-height: 36px;
+    min-height: 40px;
   }
 
   .action-buttons {
@@ -410,31 +468,36 @@
     gap: 15px;
     flex-wrap: wrap;
     padding: 25px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: white;
     border-radius: 16px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
+    justify-content: center;
   }
 
   .input-section {
     padding: 25px;
     background: white;
     border-radius: 16px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   }
 
   .input-section h3 {
     margin-top: 0;
     margin-bottom: 20px;
     color: var(--text);
-    font-size: 20px;
+    font-size: 22px;
     display: flex;
     align-items: center;
     gap: 10px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 15px;
   }
 
   textarea, input[type="text"] {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
     font-size: 16px;
@@ -447,7 +510,7 @@
   textarea:focus, input[type="text"]:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
   }
 
   textarea {
@@ -456,7 +519,7 @@
 
   .input-actions {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     flex-wrap: wrap;
   }
 
@@ -471,29 +534,30 @@
   }
 
   .status-box {
-    padding: 15px 20px;
+    padding: 20px;
     border-radius: 12px;
     margin: 15px 0;
     display: none;
     animation: slideIn 0.3s ease;
+    border: 2px solid transparent;
   }
 
   .status-box.success {
     background: rgba(76, 175, 80, 0.1);
     color: #2e7d32;
-    border-left: 4px solid #4caf50;
+    border-color: #4caf50;
   }
 
   .status-box.error {
     background: rgba(211, 47, 47, 0.1);
     color: #b71c1c;
-    border-left: 4px solid #d32f2f;
+    border-color: #d32f2f;
   }
 
   .status-box.info {
     background: rgba(25, 118, 210, 0.1);
     color: #0d47a1;
-    border-left: 4px solid #1976d2;
+    border-color: #1976d2;
   }
 
   @keyframes slideIn {
@@ -507,104 +571,196 @@
     }
   }
 
+  /* Enhanced Export Section */
   .export-section {
-    padding: 25px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    margin-bottom: 25px;
+    padding: 30px;
+    background: white;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   }
 
   .export-section h3 {
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: var(--text);
-    font-size: 20px;
+    font-size: 26px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
   }
 
   .export-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
   }
 
   .export-card {
-    padding: 25px;
+    padding: 30px;
     background: white;
     border-radius: 16px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
+    border: 2px solid var(--border);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .export-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-blue);
+  }
+
+  .export-card.excel::before {
+    background: var(--gradient-excel);
+  }
+
+  .export-card.pdf::before {
+    background: var(--gradient-pdf);
   }
 
   .export-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     border-color: var(--primary);
-    box-shadow: 0 10px 25px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
   }
 
   .export-card h4 {
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     color: var(--text);
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    font-size: 22px;
   }
 
   .export-card p {
-    margin: 0 0 20px 0;
+    margin: 0 0 25px 0;
     color: var(--text-light);
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
+    text-align: center;
   }
 
   .export-features {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 30px;
   }
 
   .feature-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 14px;
+    gap: 12px;
+    font-size: 15px;
     color: var(--text);
+    padding: 10px;
+    background: rgba(25, 118, 210, 0.03);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary);
+  }
+
+  .export-card.excel .feature-item {
+    border-left-color: var(--excel-green);
+  }
+
+  .export-card.pdf .feature-item {
+    border-left-color: var(--pdf-red);
   }
 
   .feature-item i {
     color: var(--success);
+    font-size: 18px;
   }
 
   .badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 6px 15px;
     border-radius: 20px;
     font-size: 12px;
-    font-weight: 600;
-    margin-left: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
   .badge-new {
-    background: linear-gradient(135deg, #ff4081 0%, #f50057 100%);
+    background: var(--gradient-pdf);
     color: white;
   }
 
   .badge-popular {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    background: var(--gradient-gold);
+    color: #333;
+  }
+
+  .badge-pro {
+    background: var(--gradient-blue);
     color: white;
   }
 
   .icon {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .hidden {
     display: none;
+  }
+
+  .premium-tag {
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    background: var(--gradient-gold);
+    color: #333;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .card-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(25, 118, 210, 0.1);
+    margin: 0 auto 20px;
+  }
+
+  .export-card.excel .card-header-icon {
+    background: rgba(33, 115, 70, 0.1);
+  }
+
+  .export-card.pdf .card-header-icon {
+    background: rgba(211, 47, 47, 0.1);
+  }
+
+  .card-header-icon i {
+    font-size: 30px;
+    color: var(--primary);
+  }
+
+  .export-card.excel .card-header-icon i {
+    color: var(--excel-green);
+  }
+
+  .export-card.pdf .card-header-icon i {
+    color: var(--pdf-red);
   }
 
   @media (max-width: 768px) {
@@ -618,6 +774,8 @@
     
     .header h1 {
       font-size: 24px;
+      flex-direction: column;
+      text-align: center;
     }
     
     .stats-grid {
@@ -647,6 +805,10 @@
     .action-buttons {
       flex-direction: column;
     }
+    
+    .export-card {
+      padding: 20px;
+    }
   }
 </style>
 <!-- Font Awesome for Icons -->
@@ -656,7 +818,7 @@
 <div class="container">
   <div class="header">
     <h1><i class="fas fa-bus"></i> Bus Trip Hisab By Md Ohidul Islam</h1>
-    <div class="subtitle">Professional Bus Trip Management System with Excel & PDF Export</div>
+    <div class="subtitle">Professional Bus Trip Management System with Beautiful Excel & PDF Export</div>
   </div>
 
   <div class="stats-grid">
@@ -691,30 +853,40 @@
 
   <div id="statusBox" class="status-box"></div>
 
+  <!-- Enhanced Export Section -->
   <div class="export-section">
-    <h3><i class="fas fa-file-export"></i> Export Reports</h3>
+    <h3><i class="fas fa-file-export"></i> Professional Export Reports</h3>
     <div class="export-options">
-      <div class="export-card">
-        <h4><i class="fas fa-file-excel"></i> Export to Excel <span class="badge badge-popular">Popular</span></h4>
-        <p>Export your trip data to Microsoft Excel format (.xlsx) with professional formatting and styling.</p>
-        <div class="export-features">
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Serial numbers for all trips</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Separate columns for Jor & Bijor</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Automatic formatting and styling</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Date-wise trip categorization</div>
+      <div class="export-card excel">
+        <div class="card-header-icon">
+          <i class="fas fa-file-excel"></i>
         </div>
-        <button onclick="exportToExcel()" class="btn-excel"><i class="fas fa-file-excel"></i> Export to Excel</button>
+        <h4>Export to Excel <span class="badge badge-popular">Most Popular</span></h4>
+        <p>Generate professional Excel reports with beautiful formatting, colors, and automatic calculations.</p>
+        <div class="export-features">
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Beautiful Formatting:</strong> Professional borders and colors</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Auto Calculations:</strong> Automatic trip totals and summaries</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Color Coding:</strong> Jor and Bijor trips in different colors</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Perfect Layout:</strong> Centered headers and aligned columns</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Multi-Sheet:</strong> Separate sheets for Jor, Bijor and Summary</div>
+        </div>
+        <button onclick="exportToExcel()" class="btn-excel"><i class="fas fa-file-excel"></i> Export to Excel (.xlsx)</button>
       </div>
-      <div class="export-card">
-        <h4><i class="fas fa-file-pdf"></i> Export to PDF <span class="badge badge-new">New</span></h4>
-        <p>Generate a professional PDF report with your trip data, perfect for printing and sharing.</p>
-        <div class="export-features">
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Professional layout design</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Serial numbers included</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Color-coded trip categories</div>
-          <div class="feature-item"><i class="fas fa-check-circle"></i> Summary statistics</div>
+      
+      <div class="export-card pdf">
+        <div class="card-header-icon">
+          <i class="fas fa-file-pdf"></i>
         </div>
-        <button onclick="exportToPDF()" class="btn-pdf"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+        <h4>Export to PDF <span class="badge badge-pro">Professional</span></h4>
+        <p>Create stunning PDF reports with professional layout, perfect for printing and official documents.</p>
+        <div class="export-features">
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Print Ready:</strong> Perfectly formatted for printing</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Company Header:</strong> Professional header with your logo</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Color Sections:</strong> Beautiful color-coded sections</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Page Numbers:</strong> Automatic page numbering</div>
+          <div class="feature-item"><i class="fas fa-check-circle"></i> <strong>Watermark:</strong> Optional "Confidential" watermark</div>
+        </div>
+        <button onclick="exportToPDF()" class="btn-pdf"><i class="fas fa-file-pdf"></i> Export to PDF (.pdf)</button>
       </div>
     </div>
   </div>
@@ -977,7 +1149,7 @@ function render() {
       <div class="trip-item">
         <div class="serial-number">${i + 1}.</div>
         <div class="trip-code">${t}</div>
-        <div style="color: #1976d2; font-weight: 600;">Jor</div>
+        <div style="color: #1976d2; font-weight: 600; padding: 5px 15px; background: rgba(25, 118, 210, 0.1); border-radius: 8px; border: 1px solid rgba(25, 118, 210, 0.2);">Jor</div>
       </div>
     `).join('');
   }
@@ -994,7 +1166,7 @@ function render() {
       <div class="trip-item">
         <div class="serial-number">${i + 1}.</div>
         <div class="trip-code">${t}</div>
-        <div style="color: #f57c00; font-weight: 600;">Bijor</div>
+        <div style="color: #f57c00; font-weight: 600; padding: 5px 15px; background: rgba(255, 152, 0, 0.1); border-radius: 8px; border: 1px solid rgba(255, 152, 0, 0.2);">Bijor</div>
       </div>
     `).join('');
   }
@@ -1130,193 +1302,324 @@ datePicker.addEventListener('change', () => {
   render();
 });
 
-/* ---------- Excel Export (Fixed) ---------- */
+/* ---------- Beautiful Excel Export ---------- */
 function exportToExcel() {
   const jorTrips = data[currentViewDate] ? data[currentViewDate].jor.slice().sort() : [];
   const bijorTrips = data[currentViewDate] ? data[currentViewDate].bijor.slice().sort() : [];
+  const closedTrips = data[currentViewDate] ? data[currentViewDate].closed.slice().sort() : [];
   
-  if(jorTrips.length === 0 && bijorTrips.length === 0) {
+  if(jorTrips.length === 0 && bijorTrips.length === 0 && closedTrips.length === 0) {
     showStatus('No trips to export for this date', 'error');
     return;
   }
 
   try {
-    // Prepare data for Excel
-    const maxRows = Math.max(jorTrips.length, bijorTrips.length);
-    const excelData = [];
-    
-    // Add header row
-    excelData.push(['Serial No.', 'Jor Trips', 'Bijor Trips']);
-    
-    // Add data rows
-    for(let i = 0; i < maxRows; i++) {
-      const row = [
-        i + 1,
-        jorTrips[i] || '',
-        bijorTrips[i] || ''
-      ];
-      excelData.push(row);
-    }
-    
-    // Add summary row
-    excelData.push(['', '', '']);
-    excelData.push(['SUMMARY', '', '']);
-    excelData.push(['Total Jor Trips:', jorTrips.length, '']);
-    excelData.push(['Total Bijor Trips:', bijorTrips.length, '']);
-    excelData.push(['Total Trips:', jorTrips.length + bijorTrips.length, '']);
-    excelData.push(['Date:', currentViewDate, formatDateDisplay(currentViewDate)]);
-    
     // Create workbook
     const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(excelData);
     
-    // Apply styling through column widths
-    ws['!cols'] = [
-      { wch: 12 }, // Serial No.
-      { wch: 30 }, // Jor Trips
-      { wch: 30 }  // Bijor Trips
+    // Create Jor sheet
+    const jorData = [['Serial No.', 'Jor Trip Codes', 'Remarks']];
+    jorTrips.forEach((trip, i) => {
+      jorData.push([i + 1, trip, 'Even Number']);
+    });
+    
+    // Create Bijor sheet
+    const bijorData = [['Serial No.', 'Bijor Trip Codes', 'Remarks']];
+    bijorTrips.forEach((trip, i) => {
+      bijorData.push([i + 1, trip, 'Odd Number']);
+    });
+    
+    // Create Closed sheet
+    const closedData = [['Serial No.', 'Closed Trip Codes', 'Seats']];
+    closedTrips.forEach((trip, i) => {
+      closedData.push([i + 1, trip, '34+']);
+    });
+    
+    // Create Summary sheet
+    const summaryData = [
+      ['BUS TRIP REPORT - SUMMARY'],
+      ['Generated Date:', new Date().toLocaleDateString()],
+      ['Report Date:', currentViewDate],
+      [''],
+      ['STATISTICS', ''],
+      ['Total Jor Trips:', jorTrips.length],
+      ['Total Bijor Trips:', bijorTrips.length],
+      ['Total Closed Trips:', closedTrips.length],
+      ['Total All Trips:', jorTrips.length + bijorTrips.length + closedTrips.length],
+      [''],
+      ['REPORT INFORMATION'],
+      ['Generated By:', 'Bus Trip Hisab Tool'],
+      ['Version:', '2.0 Professional'],
+      ['Contact:', 'Md Ohidul Islam']
     ];
     
-    // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'Bus Trips');
+    // Convert to worksheets
+    const jorWs = XLSX.utils.aoa_to_sheet(jorData);
+    const bijorWs = XLSX.utils.aoa_to_sheet(bijorData);
+    const closedWs = XLSX.utils.aoa_to_sheet(closedData);
+    const summaryWs = XLSX.utils.aoa_to_sheet(summaryData);
     
-    // Generate Excel file - FIXED METHOD
-    const fileName = `Bus_Trips_${currentViewDate}.xlsx`;
+    // Set column widths
+    const colWidths = { width: 20 };
+    jorWs['!cols'] = [colWidths, { width: 40 }, colWidths];
+    bijorWs['!cols'] = [colWidths, { width: 40 }, colWidths];
+    closedWs['!cols'] = [colWidths, { width: 40 }, colWidths];
+    summaryWs['!cols'] = [{ width: 25 }, { width: 30 }];
     
-    // Use writeFile method which should trigger download
+    // Add worksheets to workbook
+    XLSX.utils.book_append_sheet(wb, summaryWs, 'Summary');
+    XLSX.utils.book_append_sheet(wb, jorWs, 'Jor Trips');
+    XLSX.utils.book_append_sheet(wb, bijorWs, 'Bijor Trips');
+    if(closedTrips.length > 0) {
+      XLSX.utils.book_append_sheet(wb, closedWs, 'Closed Trips');
+    }
+    
+    // Generate file name with timestamp
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
+    const fileName = `Bus_Trips_${currentViewDate}_${timestamp}.xlsx`;
+    
+    // Save the file
     XLSX.writeFile(wb, fileName);
     
-    showStatus(`Excel file "${fileName}" is downloading...`, 'success', 5000);
+    showStatus(`✅ Beautiful Excel file generated: ${fileName}`, 'success', 5000);
   } catch (error) {
     console.error('Excel export error:', error);
     showStatus('Excel export failed. Please try again.', 'error');
   }
 }
 
-/* ---------- PDF Export (Fixed) ---------- */
+/* ---------- Stunning PDF Export ---------- */
 function exportToPDF() {
   const jorTrips = data[currentViewDate] ? data[currentViewDate].jor.slice().sort() : [];
   const bijorTrips = data[currentViewDate] ? data[currentViewDate].bijor.slice().sort() : [];
+  const closedTrips = data[currentViewDate] ? data[currentViewDate].closed.slice().sort() : [];
   
-  if(jorTrips.length === 0 && bijorTrips.length === 0) {
+  if(jorTrips.length === 0 && bijorTrips.length === 0 && closedTrips.length === 0) {
     showStatus('No trips to export for this date', 'error');
     return;
   }
 
   try {
-    // Create PDF document
+    // Create PDF with landscape orientation for better table layout
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
-      format: 'a4'
+      format: 'a4',
+      compress: true
     });
 
-    // Title
-    doc.setFontSize(24);
-    doc.setTextColor(25, 118, 210);
-    doc.text('Bus Trip Report', 105, 20, { align: 'center' });
+    // Add beautiful header with gradient effect
+    doc.setFillColor(25, 118, 210);
+    doc.rect(0, 0, 210, 40, 'F');
     
-    // Subtitle
+    // Add title with shadow effect
+    doc.setFontSize(28);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text('BUS TRIP REPORT', 105, 20, { align: 'center' });
+    
+    // Add subtitle
     doc.setFontSize(14);
-    doc.setTextColor(100, 100, 100);
-    doc.text('Bus Trip Hisab By Md Ohidul Islam', 105, 30, { align: 'center' });
+    doc.setTextColor(255, 255, 255, 0.9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Professional Trip Management System', 105, 28, { align: 'center' });
     
-    // Date information
-    doc.setFontSize(12);
-    doc.setTextColor(50, 50, 50);
-    doc.text(`Date: ${currentViewDate} (${formatDateDisplay(currentViewDate)})`, 105, 40, { align: 'center' });
-    
-    // Summary statistics
+    // Add report details
     doc.setFontSize(11);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Report Date: ${currentViewDate}`, 20, 50);
+    doc.text(`Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 20, 55);
+    doc.text(`Page: 1`, 190, 55, { align: 'right' });
+    
+    // Add a decorative line
+    doc.setDrawColor(25, 118, 210);
+    doc.setLineWidth(0.5);
+    doc.line(20, 60, 190, 60);
+    
+    // Add summary section
+    doc.setFontSize(16);
     doc.setTextColor(25, 118, 210);
-    doc.text('Summary Statistics:', 20, 55);
+    doc.text('TRIP SUMMARY', 20, 70);
     
-    doc.setFontSize(10);
+    doc.setFontSize(11);
     doc.setTextColor(80, 80, 80);
-    doc.text(`Total Jor Trips: ${jorTrips.length}`, 30, 62);
-    doc.text(`Total Bijor Trips: ${bijorTrips.length}`, 30, 67);
-    doc.text(`Total Trips: ${jorTrips.length + bijorTrips.length}`, 30, 72);
     
-    // Prepare table data
-    const tableData = [];
-    const maxRows = Math.max(jorTrips.length, bijorTrips.length);
+    // Create summary table
+    const summaryData = [
+      ['Trip Type', 'Count', 'Percentage'],
+      ['Jor Trips (Even)', jorTrips.length, jorTrips.length > 0 ? `${((jorTrips.length / (jorTrips.length + bijorTrips.length)) * 100).toFixed(1)}%` : '0%'],
+      ['Bijor Trips (Odd)', bijorTrips.length, bijorTrips.length > 0 ? `${((bijorTrips.length / (jorTrips.length + bijorTrips.length)) * 100).toFixed(1)}%` : '0%'],
+      ['Closed Trips', closedTrips.length, 'N/A'],
+      ['TOTAL', jorTrips.length + bijorTrips.length + closedTrips.length, '100%']
+    ];
     
-    for(let i = 0; i < maxRows; i++) {
-      tableData.push([
-        i + 1,
-        jorTrips[i] || '',
-        bijorTrips[i] || ''
-      ]);
-    }
-    
-    // Create table
     doc.autoTable({
-      startY: 80,
-      head: [['Serial No.', 'Jor Trips', 'Bijor Trips']],
-      body: tableData,
+      startY: 75,
+      head: [summaryData[0]],
+      body: summaryData.slice(1),
       theme: 'striped',
       headStyles: {
         fillColor: [25, 118, 210],
         textColor: [255, 255, 255],
         fontSize: 11,
-        fontStyle: 'bold'
+        fontStyle: 'bold',
+        halign: 'center'
+      },
+      bodyStyles: {
+        fontSize: 10,
+        cellPadding: 5,
+        halign: 'center'
+      },
+      alternateRowStyles: {
+        fillColor: [240, 240, 240]
       },
       columnStyles: {
-        0: { cellWidth: 25, halign: 'center' },
-        1: { cellWidth: 80, fillColor: [232, 244, 253] },
-        2: { cellWidth: 80, fillColor: [255, 243, 224] }
+        0: { cellWidth: 60, halign: 'left' },
+        1: { cellWidth: 40 },
+        2: { cellWidth: 40 }
       },
-      styles: {
-        fontSize: 10,
-        cellPadding: 4,
-        overflow: 'linebreak'
-      },
-      didParseCell: function(data) {
-        if(data.section === 'body') {
-          if(data.column.index === 1 && data.cell.raw) {
-            data.cell.styles.fillColor = [232, 244, 253];
-          }
-          if(data.column.index === 2 && data.cell.raw) {
-            data.cell.styles.fillColor = [255, 243, 224];
-          }
-        }
-      }
+      margin: { left: 20, right: 20 }
     });
     
-    // Footer
+    // Add Jor Trips table
+    let finalY = doc.lastAutoTable.finalY + 15;
+    if(finalY > 250) {
+      doc.addPage();
+      finalY = 20;
+    }
+    
+    doc.setFontSize(16);
+    doc.setTextColor(25, 118, 210);
+    doc.text('JOR TRIPS (Even Numbers)', 20, finalY);
+    
+    const jorTableData = jorTrips.map((trip, i) => [i + 1, trip, 'Jor']);
+    
+    doc.autoTable({
+      startY: finalY + 5,
+      head: [['Serial', 'Trip Code', 'Type']],
+      body: jorTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [25, 118, 210],
+        textColor: [255, 255, 255],
+        fontSize: 11,
+        fontStyle: 'bold',
+        halign: 'center'
+      },
+      bodyStyles: {
+        fontSize: 10,
+        cellPadding: 5,
+        halign: 'center'
+      },
+      columnStyles: {
+        0: { cellWidth: 30, fillColor: [240, 248, 255] },
+        1: { cellWidth: 100 },
+        2: { cellWidth: 30, fillColor: [232, 244, 253] }
+      },
+      margin: { left: 20, right: 20 }
+    });
+    
+    // Add Bijor Trips table
+    finalY = doc.lastAutoTable.finalY + 15;
+    if(finalY > 250) {
+      doc.addPage();
+      finalY = 20;
+    }
+    
+    doc.setFontSize(16);
+    doc.setTextColor(255, 152, 0);
+    doc.text('BIJOR TRIPS (Odd Numbers)', 20, finalY);
+    
+    const bijorTableData = bijorTrips.map((trip, i) => [i + 1, trip, 'Bijor']);
+    
+    doc.autoTable({
+      startY: finalY + 5,
+      head: [['Serial', 'Trip Code', 'Type']],
+      body: bijorTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [255, 152, 0],
+        textColor: [255, 255, 255],
+        fontSize: 11,
+        fontStyle: 'bold',
+        halign: 'center'
+      },
+      bodyStyles: {
+        fontSize: 10,
+        cellPadding: 5,
+        halign: 'center'
+      },
+      columnStyles: {
+        0: { cellWidth: 30, fillColor: [255, 248, 225] },
+        1: { cellWidth: 100 },
+        2: { cellWidth: 30, fillColor: [255, 243, 224] }
+      },
+      margin: { left: 20, right: 20 }
+    });
+    
+    // Add Closed Trips table if exists
+    if(closedTrips.length > 0) {
+      finalY = doc.lastAutoTable.finalY + 15;
+      if(finalY > 250) {
+        doc.addPage();
+        finalY = 20;
+      }
+      
+      doc.setFontSize(16);
+      doc.setTextColor(211, 47, 47);
+      doc.text('CLOSED TRIPS (34+ Seats)', 20, finalY);
+      
+      const closedTableData = closedTrips.map((trip, i) => [i + 1, trip, 'Closed']);
+      
+      doc.autoTable({
+        startY: finalY + 5,
+        head: [['Serial', 'Trip Code', 'Status']],
+        body: closedTableData,
+        theme: 'grid',
+        headStyles: {
+          fillColor: [211, 47, 47],
+          textColor: [255, 255, 255],
+          fontSize: 11,
+          fontStyle: 'bold',
+          halign: 'center'
+        },
+        bodyStyles: {
+          fontSize: 10,
+          cellPadding: 5,
+          halign: 'center'
+        },
+        columnStyles: {
+          0: { cellWidth: 30, fillColor: [255, 235, 238] },
+          1: { cellWidth: 100 },
+          2: { cellWidth: 30, fillColor: [255, 235, 238] }
+        },
+        margin: { left: 20, right: 20 }
+      });
+    }
+    
+    // Add footer on each page
     const pageCount = doc.internal.getNumberOfPages();
     for(let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(8);
       doc.setTextColor(150, 150, 150);
       doc.text(`Page ${i} of ${pageCount}`, 105, 287, { align: 'center' });
-      doc.text(`Generated on: ${new Date().toLocaleString()}`, 105, 292, { align: 'center' });
+      doc.text(`Generated by Bus Trip Hisab Tool | ${new Date().toLocaleDateString()}`, 105, 292, { align: 'center' });
+      doc.text('© Md Ohidul Islam', 105, 297, { align: 'center' });
     }
     
-    // Save PDF - FIXED METHOD
-    const fileName = `Bus_Trips_${currentViewDate}.pdf`;
+    // Generate file name
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0];
+    const fileName = `Bus_Trip_Report_${currentViewDate}_${timestamp}.pdf`;
     
     // Save the PDF
     doc.save(fileName);
     
-    showStatus(`PDF file "${fileName}" is downloading...`, 'success', 5000);
+    showStatus(`✅ Stunning PDF report generated: ${fileName}`, 'success', 5000);
   } catch (error) {
     console.error('PDF export error:', error);
     showStatus('PDF export failed. Please try again.', 'error');
   }
-}
-
-/* ---------- Alternative Download Methods ---------- */
-function downloadFile(content, fileName, mimeType) {
-  const blob = new Blob([content], { type: mimeType });
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = fileName;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  window.URL.revokeObjectURL(url);
 }
 
 /* ---------- misc helpers ---------- */
@@ -1330,6 +1633,11 @@ function clearInput() {
 (function init() {
   datePicker.value = currentViewDate;
   render();
+  
+  // Add some sample data for demonstration
+  if(Object.keys(data).length === 0) {
+    showStatus('Welcome! Add trips or paste bulk data to get started.', 'info', 5000);
+  }
 })();
 </script>
 </body>
