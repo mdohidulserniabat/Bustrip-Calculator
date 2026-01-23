@@ -1715,7 +1715,7 @@ function exportToExcel() {
   }
 }
 
-/* ---------- PDF Export (Professional Design) ---------- */
+/* ---------- PDF Export (Professional & Compact Design - No Empty Space) ---------- */
 function exportToPDF() {
   showProgress('pdf');
   
@@ -1733,7 +1733,7 @@ function exportToPDF() {
   }
 
   try {
-    // Create PDF document
+    // Create PDF document in PORTRAIT mode
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
@@ -1743,194 +1743,34 @@ function exportToPDF() {
 
     // Set default font
     doc.setFont("helvetica");
-    doc.setFontSize(10);
+    doc.setFontSize(9);
 
-    // Title Page
-    doc.setFontSize(24);
+    // Main Header - Company and Report Info
+    doc.setFontSize(16);
     doc.setTextColor(33, 150, 243);
-    doc.text('Ahnaf Transport (Pvt) Ltd', 105, 40, { align: 'center' });
-    
-    doc.setFontSize(18);
-    doc.setTextColor(103, 58, 183);
-    doc.text('Trip Hisab Report', 105, 55, { align: 'center' });
-    
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text('By Md Ohidul Islam', 105, 70, { align: 'center' });
+    doc.text('Ahnaf Transport (Pvt) Ltd', 105, 15, { align: 'center' });
     
     doc.setFontSize(12);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`Date: ${currentViewDate}`, 105, 85, { align: 'center' });
-    doc.text(formatDateDisplay(currentViewDate), 105, 92, { align: 'center' });
+    doc.setTextColor(103, 58, 183);
+    doc.text('Trip Hisab Report - By Md Ohidul Islam', 105, 22, { align: 'center' });
     
     doc.setFontSize(10);
-    doc.text('Generated: ' + new Date().toLocaleString(), 105, 105, { align: 'center' });
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Date: ${currentViewDate}`, 20, 32);
+    doc.text(`Report: ${formatDateDisplay(currentViewDate)}`, 105, 32, { align: 'center' });
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 190, 32, { align: 'right' });
     
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text('Professional Trip Management System', 105, 280, { align: 'center' });
-    
-    // Add new page for Barisal Route
-    doc.addPage();
-    
-    // Barisal Route Header
-    doc.setFontSize(16);
-    doc.setTextColor(33, 150, 243);
-    doc.text('Dhaka - Barisal Route', 20, 20);
-    
+    // Separator line
     doc.setDrawColor(33, 150, 243);
-    doc.setLineWidth(0.5);
-    doc.line(20, 22, 190, 22);
-    
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Ahnaf Transport (Pvt) Ltd, Dhaka - Barisal Road', 20, 30);
-    doc.text('Trip Hisab By Md Ohidul Islam', 20, 36);
-    
-    // Barisal Route Table
-    const barisalTableData = [];
-    const maxBarisalRows = Math.max(barisalJor.length, barisalBijor.length);
-    
-    for(let i = 0; i < maxBarisalRows; i++) {
-      barisalTableData.push([
-        (i + 1).toString(),
-        barisalJor[i] || '',
-        barisalBijor[i] || ''
-      ]);
-    }
-    
-    doc.autoTable({
-      startY: 45,
-      head: [['SL', 'JOR TRIPS (Barisal Side)', 'BIJOR TRIPS (Dhaka Side)']],
-      body: barisalTableData,
-      theme: 'grid',
-      headStyles: {
-        fillColor: [33, 150, 243],
-        textColor: [255, 255, 255],
-        fontSize: 9,
-        fontStyle: 'bold',
-        halign: 'center'
-      },
-      columnStyles: {
-        0: { cellWidth: 15, halign: 'center' },
-        1: { cellWidth: 85, fillColor: [232, 244, 253] },
-        2: { cellWidth: 85, fillColor: [255, 243, 224] }
-      },
-      styles: {
-        fontSize: 8,
-        cellPadding: 3,
-        overflow: 'linebreak',
-        lineColor: [200, 200, 200],
-        lineWidth: 0.1
-      },
-      margin: { top: 5 }
-    });
-    
-    // Barisal Summary
-    const barisalY = doc.lastAutoTable.finalY + 10;
-    doc.setFillColor(240, 240, 240);
-    doc.roundedRect(20, barisalY, 170, 25, 3, 3, 'F');
-    
-    doc.setFontSize(10);
-    doc.setTextColor(33, 150, 243);
-    doc.setFont(undefined, 'bold');
-    doc.text('BARISAL ROUTE SUMMARY', 28, barisalY + 8);
-    
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'normal');
-    
-    doc.text(`Total Jor Trips (Barisal Side): ${barisalJor.length}`, 28, barisalY + 16);
-    doc.text(`Total Bijor Trips (Dhaka Side): ${barisalBijor.length}`, 105, barisalY + 16);
-    doc.text(`Total Barisal Route Trips: ${barisalJor.length + barisalBijor.length}`, 28, barisalY + 22);
-    
-    // Add new page for Rangpur Route
-    doc.addPage();
-    
-    // Rangpur Route Header
-    doc.setFontSize(16);
-    doc.setTextColor(103, 58, 183);
-    doc.text('Dhaka - Rangpur Route', 20, 20);
-    
-    doc.setDrawColor(103, 58, 183);
-    doc.setLineWidth(0.5);
-    doc.line(20, 22, 190, 22);
-    
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Ahnaf Transport (Pvt) Ltd, Dhaka - Rangpur Road', 20, 30);
-    doc.text('Trip Hisab By Md Ohidul Islam', 20, 36);
-    
-    // Rangpur Route Table
-    const rangpurTableData = [];
-    const maxRangpurRows = Math.max(rangpurJor.length, rangpurBijor.length);
-    
-    for(let i = 0; i < maxRangpurRows; i++) {
-      rangpurTableData.push([
-        (i + 1).toString(),
-        rangpurJor[i] || '',
-        rangpurBijor[i] || ''
-      ]);
-    }
-    
-    doc.autoTable({
-      startY: 45,
-      head: [['SL', 'JOR TRIPS (Rangpur Side)', 'BIJOR TRIPS (Dhaka Side)']],
-      body: rangpurTableData,
-      theme: 'grid',
-      headStyles: {
-        fillColor: [103, 58, 183],
-        textColor: [255, 255, 255],
-        fontSize: 9,
-        fontStyle: 'bold',
-        halign: 'center'
-      },
-      columnStyles: {
-        0: { cellWidth: 15, halign: 'center' },
-        1: { cellWidth: 85, fillColor: [243, 229, 245] },
-        2: { cellWidth: 85, fillColor: [255, 243, 224] }
-      },
-      styles: {
-        fontSize: 8,
-        cellPadding: 3,
-        overflow: 'linebreak',
-        lineColor: [200, 200, 200],
-        lineWidth: 0.1
-      },
-      margin: { top: 5 }
-    });
-    
-    // Rangpur Summary
-    const rangpurY = doc.lastAutoTable.finalY + 10;
-    doc.setFillColor(240, 240, 240);
-    doc.roundedRect(20, rangpurY, 170, 25, 3, 3, 'F');
-    
-    doc.setFontSize(10);
-    doc.setTextColor(103, 58, 183);
-    doc.setFont(undefined, 'bold');
-    doc.text('RANGPUR ROUTE SUMMARY', 28, rangpurY + 8);
-    
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'normal');
-    
-    doc.text(`Total Jor Trips (Rangpur Side): ${rangpurJor.length}`, 28, rangpurY + 16);
-    doc.text(`Total Bijor Trips (Dhaka Side): ${rangpurBijor.length}`, 105, rangpurY + 16);
-    doc.text(`Total Rangpur Route Trips: ${rangpurJor.length + rangpurBijor.length}`, 28, rangpurY + 22);
-    
-    // Add new page for Overall Summary
-    doc.addPage();
-    
-    // Overall Summary Header
-    doc.setFontSize(20);
-    doc.setTextColor(0, 150, 136);
-    doc.text('Overall Trip Summary', 105, 30, { align: 'center' });
-    
-    doc.setDrawColor(0, 150, 136);
-    doc.setLineWidth(0.5);
+    doc.setLineWidth(0.3);
     doc.line(20, 35, 190, 35);
     
-    // Summary Table
+    // Overall Trip Summary (Compact)
+    doc.setFontSize(12);
+    doc.setTextColor(0, 150, 136);
+    doc.text('Overall Trip Summary', 20, 42);
+    
+    // Summary Table (Compact)
     const summaryTableData = [
       [
         'Dhaka - Barisal Route',
@@ -1953,38 +1793,197 @@ function exportToPDF() {
     ];
     
     doc.autoTable({
-      startY: 50,
+      startY: 47,
       head: [['ROUTE', 'JOR TRIPS', 'BIJOR TRIPS', 'TOTAL TRIPS']],
       body: summaryTableData,
       theme: 'grid',
       headStyles: {
         fillColor: [0, 150, 136],
         textColor: [255, 255, 255],
-        fontSize: 10,
+        fontSize: 9,
         fontStyle: 'bold',
-        halign: 'center'
+        halign: 'center',
+        cellPadding: 2
       },
       columnStyles: {
-        0: { cellWidth: 60, fontStyle: 'bold' },
-        1: { cellWidth: 40, halign: 'center' },
-        2: { cellWidth: 40, halign: 'center' },
-        3: { cellWidth: 40, halign: 'center', fontStyle: 'bold' }
+        0: { cellWidth: 50, fontStyle: 'bold' },
+        1: { cellWidth: 30, halign: 'center' },
+        2: { cellWidth: 30, halign: 'center' },
+        3: { cellWidth: 30, halign: 'center', fontStyle: 'bold' }
       },
       styles: {
-        fontSize: 9,
-        cellPadding: 4,
+        fontSize: 8,
+        cellPadding: 2,
         overflow: 'linebreak',
         lineColor: [200, 200, 200],
-        lineWidth: 0.1
+        lineWidth: 0.1,
+        minCellHeight: 6
       },
-      margin: { top: 5 },
+      margin: { top: 2, left: 20, right: 20 },
       didParseCell: function(data) {
         if(data.row.index === 2) { // Grand Total row
           data.cell.styles.fillColor = [225, 245, 254];
           data.cell.styles.fontStyle = 'bold';
         }
+        if(data.row.index < 2) { // Route rows
+          if(data.column.index === 0) {
+            data.cell.styles.fillColor = data.row.index === 0 ? [232, 244, 253] : [243, 229, 245];
+          }
+        }
       }
     });
+    
+    let currentY = doc.lastAutoTable.finalY + 8;
+    
+    // Barisal Route Header
+   doc.setFontSize(14);
+doc.setTextColor(33, 150, 243);
+doc.text('Ahnaf Transport (Pvt) Ltd, Dhaka - Barisal Road', 105, currentY, { align: 'center' });
+
+doc.setFontSize(11);
+doc.setTextColor(0, 0, 0);
+doc.text('Trip Hisab By Md Ohidul Islam', 105, currentY + 6, { align: 'center' });
+    
+    currentY += 12;
+    
+    // Barisal Route Table
+    const barisalTableData = [];
+    const maxBarisalRows = Math.max(barisalJor.length, barisalBijor.length);
+    
+    for(let i = 0; i < maxBarisalRows; i++) {
+      barisalTableData.push([
+        (i + 1).toString(),
+        barisalJor[i] || '',
+        barisalBijor[i] || ''
+      ]);
+    }
+    
+    doc.autoTable({
+      startY: currentY,
+      head: [['SL', 'JOR TRIPS (Barisal Side)', 'BIJOR TRIPS (Dhaka Side)']],
+      body: barisalTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [33, 150, 243],
+        textColor: [255, 255, 255],
+        fontSize: 8,
+        fontStyle: 'bold',
+        halign: 'center',
+        cellPadding: 2
+      },
+      columnStyles: {
+        0: { cellWidth: 15, halign: 'center' },
+        1: { cellWidth: 70, fillColor: [232, 244, 253] },
+        2: { cellWidth: 70, fillColor: [255, 243, 224] }
+      },
+      styles: {
+        fontSize: 7,
+        cellPadding: 1.5,
+        overflow: 'linebreak',
+        lineColor: [200, 200, 200],
+        lineWidth: 0.1,
+        minCellHeight: 5
+      },
+      margin: { top: 2, left: 20, right: 20 },
+      pageBreak: 'auto'
+    });
+    
+    currentY = doc.lastAutoTable.finalY + 5;
+    
+    // Barisal Summary Box (Compact)
+    doc.setFillColor(240, 240, 240);
+    doc.roundedRect(20, currentY, 170, 10, 2, 2, 'F');
+    
+    doc.setFontSize(9);
+    doc.setTextColor(33, 150, 243);
+    doc.setFont(undefined, 'bold');
+    doc.text('BARISAL ROUTE SUMMARY:', 25, currentY + 3);
+    
+    doc.setFontSize(8);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Jor (Barisal Side): ${barisalJor.length}`, 80, currentY + 3);
+    doc.text(`Bijor (Dhaka Side): ${barisalBijor.length}`, 120, currentY + 3);
+    doc.text(`Total: ${barisalJor.length + barisalBijor.length}`, 160, currentY + 3);
+    
+    currentY += 15; // Space before next route
+    
+    // Check if we need new page for Rangpur route
+    if (currentY > 260) { // Near bottom of page
+      doc.addPage();
+      currentY = 20;
+    }
+    
+    // Rangpur Route Header
+    doc.setFontSize(14);
+doc.setTextColor(103, 58, 183);
+doc.text('Ahnaf Transport (Pvt) Ltd, Dhaka - Rangpur Road', 105, currentY, { align: 'center' });
+
+doc.setFontSize(11);
+doc.setTextColor(0, 0, 0);
+doc.text('Trip Hisab By Md Ohidul Islam', 105, currentY + 6, { align: 'center' });
+    
+    currentY += 12;
+    
+    // Rangpur Route Table
+    const rangpurTableData = [];
+    const maxRangpurRows = Math.max(rangpurJor.length, rangpurBijor.length);
+    
+    for(let i = 0; i < maxRangpurRows; i++) {
+      rangpurTableData.push([
+        (i + 1).toString(),
+        rangpurJor[i] || '',
+        rangpurBijor[i] || ''
+      ]);
+    }
+    
+    doc.autoTable({
+      startY: currentY,
+      head: [['SL', 'JOR TRIPS (Rangpur Side)', 'BIJOR TRIPS (Dhaka Side)']],
+      body: rangpurTableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [103, 58, 183],
+        textColor: [255, 255, 255],
+        fontSize: 8,
+        fontStyle: 'bold',
+        halign: 'center',
+        cellPadding: 2
+      },
+      columnStyles: {
+        0: { cellWidth: 15, halign: 'center' },
+        1: { cellWidth: 70, fillColor: [243, 229, 245] },
+        2: { cellWidth: 70, fillColor: [255, 243, 224] }
+      },
+      styles: {
+        fontSize: 7,
+        cellPadding: 1.5,
+        overflow: 'linebreak',
+        lineColor: [200, 200, 200],
+        lineWidth: 0.1,
+        minCellHeight: 5
+      },
+      margin: { top: 2, left: 20, right: 20 },
+      pageBreak: 'auto'
+    });
+    
+    currentY = doc.lastAutoTable.finalY + 5;
+    
+    // Rangpur Summary Box (Compact)
+    doc.setFillColor(240, 240, 240);
+    doc.roundedRect(20, currentY, 170, 10, 2, 2, 'F');
+    
+    doc.setFontSize(9);
+    doc.setTextColor(103, 58, 183);
+    doc.setFont(undefined, 'bold');
+    doc.text('RANGPUR ROUTE SUMMARY:', 25, currentY + 3);
+    
+    doc.setFontSize(8);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Jor (Rangpur Side): ${rangpurJor.length}`, 80, currentY + 3);
+    doc.text(`Bijor (Dhaka Side): ${rangpurBijor.length}`, 120, currentY + 3);
+    doc.text(`Total: ${rangpurJor.length + rangpurBijor.length}`, 160, currentY + 3);
     
     // Footer with page numbers
     const pageCount = doc.internal.getNumberOfPages();
@@ -1992,8 +1991,8 @@ function exportToPDF() {
       doc.setPage(i);
       doc.setFontSize(7);
       doc.setTextColor(150, 150, 150);
-      doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-      doc.text('Ahnaf Transport (Pvt) Ltd - Trip Hisab Report | By Md Ohidul Islam', 105, 293, { align: 'center' });
+      doc.text(`Page ${i} of ${pageCount}`, 105, 287, { align: 'center' });
+      doc.text('Ahnaf Transport (Pvt) Ltd - Trip Hisab Report | By Md Ohidul Islam', 105, 290, { align: 'center' });
     }
     
     // Save PDF
